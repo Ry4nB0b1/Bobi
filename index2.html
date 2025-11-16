@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Game Loading Screen</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #0f0f0f;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .loading-screen {
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 3rem;
+      font-weight: bold;
+      animation: pulse 2s infinite;
+      color: #00ffcc;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .progress-bar {
+      margin: 30px auto;
+      width: 300px;
+      height: 20px;
+      background: #333;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #00ffcc, #007777);
+      border-radius: 10px;
+      transition: width 0.3s ease;
+    }
+
+    .loading-text {
+      font-size: 1rem;
+      margin-top: 20px;
+      color: #aaa;
+      height: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="loading-screen">
+    <div class="logo">🚀 GameX</div>
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+    <div class="loading-text" id="loading-text">Initializing...</div>
+  </div>
+
+  <script>
+    const progressBar = document.getElementById('progress');
+    const loadingText = document.getElementById('loading-text');
+
+    const messages = [
+      'Initializing...',
+      'Loading assets...',
+      'Setting up environment...',
+      'Spawning characters...',
+      'Rendering world...',
+      'Almost there...'
+    ];
+
+    let progress = 0;
+    let msgIndex = 0;
+
+    function updateLoading() {
+      if (progress >= 100) {
+        loadingText.textContent = 'Done!';
+        // You can redirect or hide the loading screen here
+        return;
+      }
+
+      progress += Math.floor(Math.random() * 10) + 5;
+      if (progress > 100) progress = 100;
+
+      progressBar.style.width = progress + '%';
+
+      if (msgIndex < messages.length) {
+        loadingText.textContent = messages[msgIndex];
+        msgIndex++;
+      }
+
+      setTimeout(updateLoading, 700);
+    }
+
+    updateLoading();
+  </script>
+
+</body>
+</html>
